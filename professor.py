@@ -10,6 +10,5 @@ class Professor(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     first_name: Mapped[str]
     last_name: Mapped[str]
-    courses: Mapped[List["Course"]] = relationship(back_populates="professor")
 
-# TODO: column with birthdate?
+    courses: Mapped[List["Course"]] = relationship(back_populates="professor")

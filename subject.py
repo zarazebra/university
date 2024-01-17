@@ -9,4 +9,5 @@ class Subject(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
+
     courses: Mapped[List["Course"]] = relationship(back_populates="subject")

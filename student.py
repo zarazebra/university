@@ -12,5 +12,3 @@ class Student(Base):
     last_name: Mapped[str]
 
     studentrecords: Mapped[List["StudentRecord"]] = relationship(back_populates="students")
-
-# TODO: column with birthdate
