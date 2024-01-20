@@ -1,9 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 import os
+from dotenv import load_dotenv
+from base import Base
+
+load_dotenv()
 
 
 class DataBase:
     def __init__(self):
-        engine = create_engine(os.environ.get("DATABASE_URL"), echo=True)
+        engine = create_engine(os.environ["DATABASE_CONNECTION_STRING"], echo=True)
+        Base.metadata.create_all(engine)
         self.session = Session(engine)
