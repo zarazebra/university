@@ -24,4 +24,6 @@ class StudentService:
         self.session.commit()
 
     def get_all_students(self):
-        pass
+        all_students = self.session.scalars(select(Student)).all()
+        for row in all_students:
+            print(f"{row.first_name} {row.last_name}")
