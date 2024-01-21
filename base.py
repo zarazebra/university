@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase
-from typing import List
+from typing import List, Optional
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -14,11 +14,12 @@ class Course(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     professor_id: Mapped[int] = mapped_column(ForeignKey("professors.id"))
-    professor: Mapped["Professor"] = relationship(back_populates="courses")
-    subject_id: Mapped[int] = mapped_column(ForeignKey("subjects.id"))
-    subject: Mapped["Subject"] = relationship(back_populates="courses")
+    professor: Mapped["Professor"] = relationship(back_populates="course")
 
-    studentrecords: Mapped[List["StudentRecord"]] = relationship(back_populates="courses")
+    subject_id: Mapped[int] = mapped_column(ForeignKey("subjects.id"))
+    subject: Mapped["Subject"] = relationship(back_populates="course")
+
+    studentrecords: Mapped["StudentRecord"] = relationship(back_populates="course")
 
 
 class Professor(Base):
@@ -28,7 +29,7 @@ class Professor(Base):
     first_name: Mapped[str]
     last_name: Mapped[str]
 
-    courses: Mapped[List["Course"]] = relationship(back_populates="professor")
+    course: Mapped[List["Course"]] = relationship(back_populates="professor")
 
 
 class Student(Base):
@@ -37,17 +38,20 @@ class Student(Base):
     first_name: Mapped[str]
     last_name: Mapped[str]
 
-    studentrecords: Mapped[List["StudentRecord"]] = relationship(back_populates="students")
+    studentrecords: Mapped[List["StudentRecord"]] = relationship(back_populates="student")
 
 
 class StudentRecord(Base):
     __tablename__ = "studentrecords"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    course_id: Mapped[int] = mapped_column(ForeignKey("courses.id"), unique=True)
-    course: Mapped["Course"] = relationship(back_populates="studentrecords")
-    student_id: Mapped[int] = mapped_column(ForeignKey("students.id"), unique=True)
+
+    course_id: Mapped[int] = mapped_column(ForeignKey("courses.id"))
+    course: Mapped[List["Course"]] = relationship(back_populates="studentrecords")
+
+    student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
     student: Mapped["Student"] = relationship(back_populates="studentrecords")
+
     grade: Mapped[int]
 
 
@@ -57,4 +61,4 @@ class Subject(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
 
-    courses: Mapped[List["Course"]] = relationship(back_populates="subject")
+    course: Mapped[List["Course"]] = relationship(back_populates="subject")
