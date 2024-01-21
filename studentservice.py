@@ -1,5 +1,6 @@
-from base import *
+from base import Student
 from database import DataBase
+from sqlalchemy import select
 
 
 class StudentService:
@@ -11,8 +12,11 @@ class StudentService:
         self.session.add(student)
         self.session.commit()
 
-    def edit_student(self):
-        pass
+    def edit_student(self, student_id, firstname, lastname):
+        student = self.session.scalar(select(Student).where(Student.id == student_id))
+        student.first_name = firstname
+        student.last_name = lastname
+        self.session.commit()
 
     def delete_student(self):
         pass
