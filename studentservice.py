@@ -18,8 +18,10 @@ class StudentService:
         student.last_name = lastname
         self.session.commit()
 
-    def delete_student(self):
-        pass
+    def delete_student(self, student_id):
+        student = self.session.scalar(select(Student).where(Student.id == student_id))
+        self.session.delete(student)
+        self.session.commit()
 
     def get_all_students(self):
         pass
