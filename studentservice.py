@@ -8,9 +8,15 @@ class StudentService:
         self.session = DataBase().get_session()
 
     def add_student(self, firstname, lastname):
-        student = Student(first_name=firstname, last_name=lastname)
-        self.session.add(student)
-        self.session.commit()
+        invalid_chars = set(".-_")
+        if any((char in invalid_chars) for char in firstname):
+            return print("Invalid input.")
+        elif any((char in invalid_chars) for char in lastname):
+            return print("Invalid input.")
+        else:
+            student = Student(first_name=firstname, last_name=lastname)
+            self.session.add(student)
+            self.session.commit()
 
     def edit_student(self, student_id, firstname, lastname):
         student = self.session.scalar(select(Student).where(Student.id == student_id))
