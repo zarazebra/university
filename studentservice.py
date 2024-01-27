@@ -1,6 +1,7 @@
 from base import Student
 from database import DataBase
 from sqlalchemy import select
+from display import Display
 
 
 class StudentService:
@@ -31,5 +32,7 @@ class StudentService:
 
     def get_all_students(self):
         all_students = self.session.scalars(select(Student)).all()
+        display = Display()
+        display.clear()
         for row in all_students:
             print(f"{row.first_name} {row.last_name}")
