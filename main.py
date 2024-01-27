@@ -1,7 +1,7 @@
-from studentservice import StudentService
+from studentrepository import StudentRepository
 from menu import Menu
 
-student_service = StudentService()
+student_service = StudentRepository()
 menu = Menu()
 
 menu.show()

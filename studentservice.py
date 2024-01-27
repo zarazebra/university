@@ -1,38 +1,58 @@
-from base import Student
-from database import DataBase
-from sqlalchemy import select
 from display import Display
+from studentrepository import StudentRepository
 
 
-class StudentService:
+class StudentService:  # TODO: class for each entity, e.g. function_student, function_prof
     def __init__(self):
-        self.session = DataBase().get_session()
+        self.student_repository = StudentRepository()
+        self.display = Display()
 
-    def add_student(self, firstname, lastname):
-        invalid_chars = set(".-_")
-        if any((char in invalid_chars) for char in firstname):
-            return print("Invalid input.")
-        elif any((char in invalid_chars) for char in lastname):
-            return print("Invalid input.")
-        else:
-            student = Student(first_name=firstname, last_name=lastname)
-            self.session.add(student)
-            self.session.commit()
+    def showing_all_students(self):
+        self.display.clear()
+        all_students = self.student_repository.get_all_students()
+        student_info = [(info.id, info.first_name, info.last_name) for info in all_students]
+        self.display.print_table(
+            table_title="List of all students",
+            column_titles=["ID", "First Name", "Last Name"],
+            row_values=student_info
+        )
+        next_step = input("Do you want to return to the student menu? (y): ").lower()
+        return next_step
 
-    def edit_student(self, student_id, firstname, lastname):
-        student = self.session.scalar(select(Student).where(Student.id == student_id))
-        student.first_name = firstname
-        student.last_name = lastname
-        self.session.commit()
+    def adding_student(self):
+        self.display.clear()
+        print("Please add the first and last name of the new student.")
+        firstname = input("Firstname: ")
+        lastname = input("Lastname: ")
+        self.student_repository.add_student(firstname, lastname)
+        self.display.clear()
+        print(f"Successfully added student '{firstname} {lastname}'")
+        next_step = input("Do you want to return to the student menu, press '1'.\n"
+                          "If you want to add another student, press '2'.\n->  ")
+        return next_step
 
-    def delete_student(self, student_id):
-        student = self.session.scalar(select(Student).where(Student.id == student_id))
-        self.session.delete(student)
-        self.session.commit()
+    def editing_student(self):
+        self.display.clear()
+        print("Please provide the student ID of the student you want to edit and the new details.")
+        student_id = int(input("Student ID: "))
+        firstname = input("First name: ")
+        lastname = input("Last name:")
+        self.student_repository.edit_student(student_id, firstname, lastname)
+        self.display.clear()
+        print(f"Successfully changed Student with ID '{student_id}' to '{firstname} {lastname}'.")
+        next_step = input("Do you want to return to the student menu, press '1'.\n"
+                          "If you want to edit another student, press '2'.\n->  ")
+        return next_step
 
-    def get_all_students(self):
-        all_students = self.session.scalars(select(Student)).all()
-        display = Display()
-        display.clear()
-        for row in all_students:
-            print(f"{row.first_name} {row.last_name}")
+    def deleting_student(self):
+        self.display.clear()
+        print("Please provide the student ID of the student you want to delete from the database.")
+        student_id = int(input("Student ID: "))
+        self.student_repository.delete_student(student_id)
+        self.display.clear()
+        print(f"Successfully deleted the student from the database.")
+        next_step = input("Do you want to return to the student menu, press '1'.\n"
+                          "If you want to delete another student from the database, press '2'.\n->  ")
+        return next_step
+
+
