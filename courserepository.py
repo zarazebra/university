@@ -1,4 +1,4 @@
-from base import Course
+from base import Course, StudentRecord
 from database import DataBase
 from sqlalchemy import select
 
@@ -11,6 +11,11 @@ class CourseRepository:
         all_courses_data = select(Course).join(Course.professor).join(Course.subject)
         all_courses = self.session.scalars(all_courses_data).all()
         return all_courses
+
+    def get_students_of_course(self, course_id):
+        all_students_data = select(Course).where(Course.id == course_id).join(Course.professor).join(Course.subject).join(Course.studentrecords).join(StudentRecord.student)
+        all_students_of_course = self.session.scalars(all_students_data).all()
+        return all_students_of_course
 
     def add_course(self, professor_id, subject_id):
         new_course = Course(professor_id=professor_id, subject_id=subject_id)

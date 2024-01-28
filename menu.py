@@ -117,6 +117,7 @@ class Menu:
             title="Course Menu",
             options={
                 "1": "Show list of courses",
+                "1.1": "Show list of all students in course",
                 "2": "Add a new course",
                 "3": "Edit a course",
                 "4": "Delete a course",
@@ -128,6 +129,8 @@ class Menu:
         match selected_option:
             case "1":
                 self.show_all_courses()
+            case "1.1":
+                self.show_all_students_of_course()
             case "2":
                 self.show_add_course()
             case "3":
@@ -261,6 +264,13 @@ class Menu:
             self.show_course_menu()
         else:
             self.show_all_courses()
+
+    def show_all_students_of_course(self):
+        next_step = self.course_service.showing_all_students_of_course()
+        if next_step == "y":
+            self.show_course_menu()
+        else:
+            self.show_all_students_of_course()
 
     def show_add_course(self):
         next_step = self.course_service.adding_course()

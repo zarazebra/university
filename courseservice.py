@@ -29,6 +29,34 @@ class CourseService:
         next_step = input("Do you want to return to the course menu? (y): ").lower()
         return next_step
 
+    def showing_all_students_of_course(self):
+        self.display.clear()
+        print("Please provide the course ID of the course to see all enrolled students.")
+        course_id = int(input("Course ID: "))
+        all_students = self.course_repository.get_students_of_course(course_id)
+        course_info = [
+            (str(info.id),
+             str(info.subject.title),
+             str(info.professor.first_name),
+             str(info.professor.last_name),
+             str(info.studentrecords.student.first_name),
+             str(info.studentrecords.student.last_name))
+            for info in all_students]
+        self.display.print_table(
+            table_title="List of all students in selected course",
+            column_titles=[
+                "ID",
+                "Subject Title",
+                "Professor First Name",
+                "Professor Last Name",
+                "Student First Name",
+                "Student Last Name",
+            ],
+            row_values=course_info
+        )
+        next_step = input("Do you want to return to the course menu? (y): ").lower()
+        return next_step
+
     def adding_course(self):
         self.display.clear()
         print("Please add the details of the new course.")
