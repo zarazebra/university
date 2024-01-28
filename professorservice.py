@@ -1,6 +1,7 @@
 from display import Display
 from professorrepository import ProfessorRepository
 from textvalidator import TextValidator
+from time import sleep
 
 
 class ProfessorService:
@@ -28,9 +29,11 @@ class ProfessorService:
         lastname = input("Lastname: ")
         if not self.text_validator.validate_text(firstname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.adding_professor()
         elif not self.text_validator.validate_text(lastname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.adding_professor()
         self.professor_repository.add_professor(firstname, lastname)
         self.display.clear()
@@ -47,9 +50,11 @@ class ProfessorService:
         lastname = input("Last name:")
         if not self.text_validator.validate_text(firstname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.editing_professor()
         elif not self.text_validator.validate_text(lastname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.editing_professor()
         self.professor_repository.edit_professor(professor_id, firstname, lastname)
         self.display.clear()

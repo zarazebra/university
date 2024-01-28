@@ -1,6 +1,8 @@
 from display import Display
 from studentrepository import StudentRepository
 from textvalidator import TextValidator
+from time import sleep
+
 
 class StudentService:
     def __init__(self):
@@ -27,9 +29,11 @@ class StudentService:
         lastname = input("Lastname: ")
         if not self.text_validator.validate_text(firstname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.adding_student()
         elif not self.text_validator.validate_text(lastname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.adding_student()
         self.student_repository.add_student(firstname, lastname)
         self.display.clear()
@@ -46,9 +50,11 @@ class StudentService:
         lastname = input("Last name:")
         if not self.text_validator.validate_text(firstname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.editing_student()
         elif not self.text_validator.validate_text(lastname):
             print("Invalid input. Try again.")
+            sleep(1)
             self.editing_student()
         self.student_repository.edit_student(student_id, firstname, lastname)
         self.display.clear()
