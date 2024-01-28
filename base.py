@@ -52,7 +52,7 @@ class StudentRecord(Base):
     student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
     student: Mapped["Student"] = relationship(back_populates="studentrecords")
 
-    grade: Mapped[int]
+    grade: Mapped[Optional[int]]
 
 
 class Subject(Base):
