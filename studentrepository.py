@@ -1,7 +1,6 @@
 from base import Student
 from database import DataBase
 from sqlalchemy import select
-from display import Display
 
 
 class StudentRepository:
