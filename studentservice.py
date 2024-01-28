@@ -1,11 +1,12 @@
 from display import Display
 from studentrepository import StudentRepository
-
+from textvalidator import TextValidator
 
 class StudentService:
     def __init__(self):
         self.student_repository = StudentRepository()
         self.display = Display()
+        self.text_validator = TextValidator()
 
     def showing_all_students(self):
         self.display.clear()
@@ -24,6 +25,12 @@ class StudentService:
         print("Please add the first and last name of the new student.")
         firstname = input("Firstname: ")
         lastname = input("Lastname: ")
+        if not self.text_validator.validate_text(firstname):
+            print("Invalid input. Try again.")
+            self.adding_student()
+        elif not self.text_validator.validate_text(lastname):
+            print("Invalid input. Try again.")
+            self.adding_student()
         self.student_repository.add_student(firstname, lastname)
         self.display.clear()
         print(f"Successfully added student '{firstname} {lastname}'")
@@ -37,6 +44,12 @@ class StudentService:
         student_id = int(input("Student ID: "))
         firstname = input("First name: ")
         lastname = input("Last name:")
+        if not self.text_validator.validate_text(firstname):
+            print("Invalid input. Try again.")
+            self.editing_student()
+        elif not self.text_validator.validate_text(lastname):
+            print("Invalid input. Try again.")
+            self.editing_student()
         self.student_repository.edit_student(student_id, firstname, lastname)
         self.display.clear()
         print(f"Successfully changed Student with ID '{student_id}' to '{firstname} {lastname}'.")

@@ -1,11 +1,13 @@
 from display import Display
 from professorrepository import ProfessorRepository
+from textvalidator import TextValidator
 
 
 class ProfessorService:
     def __init__(self):
         self.professor_repository = ProfessorRepository()
         self.display = Display()
+        self.text_validator = TextValidator()
 
     def showing_all_professors(self):
         self.display.clear()
@@ -24,6 +26,12 @@ class ProfessorService:
         print("Please add the first and last name of the new professor.")
         firstname = input("Firstname: ")
         lastname = input("Lastname: ")
+        if not self.text_validator.validate_text(firstname):
+            print("Invalid input. Try again.")
+            self.adding_professor()
+        elif not self.text_validator.validate_text(lastname):
+            print("Invalid input. Try again.")
+            self.adding_professor()
         self.professor_repository.add_professor(firstname, lastname)
         self.display.clear()
         print(f"Successfully added professor '{firstname} {lastname}'")
@@ -37,6 +45,12 @@ class ProfessorService:
         professor_id = int(input("Professor ID: "))
         firstname = input("First name: ")
         lastname = input("Last name:")
+        if not self.text_validator.validate_text(firstname):
+            print("Invalid input. Try again.")
+            self.editing_professor()
+        elif not self.text_validator.validate_text(lastname):
+            print("Invalid input. Try again.")
+            self.editing_professor()
         self.professor_repository.edit_professor(professor_id, firstname, lastname)
         self.display.clear()
         print(f"Successfully changed professor with ID '{professor_id}' to '{firstname} {lastname}'.")
