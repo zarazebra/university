@@ -10,7 +10,7 @@ class ProfessorService:
     def showing_all_professors(self):
         self.display.clear()
         all_professors = self.professor_repository.get_all_professors()
-        professor_info = [(info.id, info.first_name, info.last_name) for info in all_professors]
+        professor_info = [(str(info.id), info.first_name, info.last_name) for info in all_professors]
         self.display.print_table(
             table_title="List of all professors",
             column_titles=["ID", "First Name", "Last Name"],
@@ -34,7 +34,7 @@ class ProfessorService:
     def editing_professor(self):
         self.display.clear()
         print("Please provide the professor ID of the professor you want to edit and the new details.")
-        professor_id = int(input("professor ID: "))
+        professor_id = int(input("Professor ID: "))
         firstname = input("First name: ")
         lastname = input("Last name:")
         self.professor_repository.edit_professor(professor_id, firstname, lastname)
@@ -47,7 +47,7 @@ class ProfessorService:
     def deleting_professor(self):
         self.display.clear()
         print("Please provide the professor ID of the professor you want to delete from the database.")
-        professor_id = int(input("professor ID: "))
+        professor_id = int(input("Professor ID: "))
         self.professor_repository.delete_professor(professor_id)
         self.display.clear()
         print(f"Successfully deleted the professor from the database.")

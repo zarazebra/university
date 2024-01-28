@@ -2,7 +2,7 @@ from display import Display
 from studentrepository import StudentRepository
 
 
-class StudentService:  # TODO: class for each entity, e.g. function_student, function_prof
+class StudentService:
     def __init__(self):
         self.student_repository = StudentRepository()
         self.display = Display()
@@ -10,7 +10,7 @@ class StudentService:  # TODO: class for each entity, e.g. function_student, fun
     def showing_all_students(self):
         self.display.clear()
         all_students = self.student_repository.get_all_students()
-        student_info = [(info.id, info.first_name, info.last_name) for info in all_students]
+        student_info = [(str(info.id), info.first_name, info.last_name) for info in all_students]
         self.display.print_table(
             table_title="List of all students",
             column_titles=["ID", "First Name", "Last Name"],

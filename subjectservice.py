@@ -10,7 +10,7 @@ class SubjectService:
     def showing_all_subjects(self):
         self.display.clear()
         all_subjects = self.subject_repository.get_all_subjects()
-        subject_info = [(info.id, info.title) for info in all_subjects]
+        subject_info = [(str(info.id), info.title) for info in all_subjects]
         self.display.print_table(
             table_title="List of all subjects",
             column_titles=["ID", "Title"],

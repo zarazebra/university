@@ -8,7 +8,7 @@ class StudentRecordRepository:
         self.session = DataBase().get_session()
 
     def add_studentrecord(self, student_id, course_id):
-        new_studentrecord = StudentRecord(student_id=student_id, course_id=course_id, grade=grade)
+        new_studentrecord = StudentRecord(student_id=student_id, course_id=course_id)
         self.session.add(new_studentrecord)
         self.session.commit()
 

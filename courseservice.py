@@ -10,7 +10,7 @@ class CourseService:
     def showing_all_courses(self):
         self.display.clear()
         all_courses = self.course_repository.get_all_courses()
-        course_info = [(info.id, info.professor_id, info.subject_id) for info in all_courses]
+        course_info = [(str(info.id), str(info.professor_id), str(info.subject_id)) for info in all_courses]
         self.display.print_table(
             table_title="List of all courses",
             column_titles=["ID", "Professor ID", "Subject ID"],

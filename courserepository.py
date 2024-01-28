@@ -7,6 +7,10 @@ class CourseRepository:
     def __init__(self):
         self.session = DataBase().get_session()
 
+    def get_all_courses(self):
+        all_courses = self.session.scalars(select(Course)).all()
+        return all_courses
+
     def add_course(self, professor_id, subject_id):
         new_course = Course(professor_id=professor_id, subject_id=subject_id)
         self.session.add(new_course)
@@ -24,7 +28,3 @@ class CourseRepository:
         course = self.session.scalar(select(Course).where(Course.id == course_id))
         self.session.delete(course)
         self.session.commit()
-
-    def get_all_courses(self):
-        all_courses = self.session.scalars(select(Course)).all()
-        return all_courses

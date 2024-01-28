@@ -20,7 +20,7 @@ class Display: # TODO: show tables with library rich
         for title in column_titles:
             table.add_column(title)
         for value in row_values:
-            table.add_row(value[0], value[1], value[2])
+            table.add_row(*value)
         console = Console()
         console.print(table)
 

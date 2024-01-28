@@ -1,7 +1,9 @@
-from studentrepository import StudentRepository
 from menu import Menu
 
-student_service = StudentRepository()
-menu = Menu()
 
-menu.show()
+def start_university_program():
+    menu = Menu()
+    menu.show()
+
+
+start_university_program()
