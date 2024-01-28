@@ -10,10 +10,20 @@ class CourseService:
     def showing_all_courses(self):
         self.display.clear()
         all_courses = self.course_repository.get_all_courses()
-        course_info = [(str(info.id), str(info.professor_id), str(info.subject_id)) for info in all_courses]
+        course_info = [
+            (str(info.id),
+             str(info.subject.title),
+             str(info.professor.first_name),
+             str(info.professor.last_name))
+            for info in all_courses]
         self.display.print_table(
             table_title="List of all courses",
-            column_titles=["ID", "Professor ID", "Subject ID"],
+            column_titles=[
+                "ID",
+                "Subject Title",
+                "Professor First Name",
+                "Professor Last Name",
+                ],
             row_values=course_info
         )
         next_step = input("Do you want to return to the course menu? (y): ").lower()

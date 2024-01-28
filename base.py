@@ -8,6 +8,34 @@ class Base(DeclarativeBase):
     pass
 
 
+class Student(Base):
+    __tablename__ = "students"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+
+    studentrecords: Mapped[List["StudentRecord"]] = relationship(back_populates="student")
+
+
+class Professor(Base):
+    __tablename__ = "professors"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+
+    course: Mapped[List["Course"]] = relationship(back_populates="professor")
+
+
+class Subject(Base):
+    __tablename__ = "subjects"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str]
+
+    course: Mapped[List["Course"]] = relationship(back_populates="subject")
+
+
 class Course(Base):
     __tablename__ = "courses"
 
@@ -22,25 +50,6 @@ class Course(Base):
     studentrecords: Mapped["StudentRecord"] = relationship(back_populates="course")
 
 
-class Professor(Base):
-    __tablename__ = "professors"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    first_name: Mapped[str]
-    last_name: Mapped[str]
-
-    course: Mapped[List["Course"]] = relationship(back_populates="professor")
-
-
-class Student(Base):
-    __tablename__ = "students"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    first_name: Mapped[str]
-    last_name: Mapped[str]
-
-    studentrecords: Mapped[List["StudentRecord"]] = relationship(back_populates="student")
-
-
 class StudentRecord(Base):
     __tablename__ = "studentrecords"
 
@@ -53,12 +62,3 @@ class StudentRecord(Base):
     student: Mapped["Student"] = relationship(back_populates="studentrecords")
 
     grade: Mapped[Optional[int]]
-
-
-class Subject(Base):
-    __tablename__ = "subjects"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str]
-
-    course: Mapped[List["Course"]] = relationship(back_populates="subject")

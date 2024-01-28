@@ -11,11 +11,25 @@ class StudentRecordService:
         self.display.clear()
         all_studentrecords = self.studentrecord_repository.get_all_studentrecords()
         studentrecord_info = [
-            (str(info.id), str(info.course_id), str(info.student_id), str(info.grade)) for info in all_studentrecords
+            (str(info.id),
+             str(info.student.first_name),
+             str(info.student.last_name),
+             str(info.course.subject.title),
+             str(info.course.professor.first_name),
+             str(info.course.professor.last_name),
+             str(info.grade))
+            for info in all_studentrecords
         ]
         self.display.print_table(
             table_title="List of all studentrecords",
-            column_titles=["ID", "Course ID", "Student ID", "Grade"],
+            column_titles=[
+                "ID",
+                "Student First Name",
+                "Student Last Name",
+                "Subject Title",
+                "Professor First Name",
+                "Professor Last Name",
+                "Grade"],
             row_values=studentrecord_info
         )
         next_step = input("Do you want to return to the studentrecord menu? (y): ").lower()

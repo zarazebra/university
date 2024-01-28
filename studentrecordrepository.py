@@ -7,6 +7,11 @@ class StudentRecordRepository:
     def __init__(self):
         self.session = DataBase().get_session()
 
+    def get_all_studentrecords(self):
+        all_studentrecords_data = select(StudentRecord).join(StudentRecord.course).join(StudentRecord.student)
+        all_studentrecords = self.session.scalars(all_studentrecords_data).all()
+        return all_studentrecords
+
     def add_studentrecord(self, student_id, course_id):
         new_studentrecord = StudentRecord(student_id=student_id, course_id=course_id)
         self.session.add(new_studentrecord)
@@ -21,8 +26,3 @@ class StudentRecordRepository:
         studentrecord = self.session.scalar(select(StudentRecord).where(StudentRecord.id == studentrecord_id))
         self.session.delete(studentrecord)
         self.session.commit()
-
-    def get_all_studentrecords(self):
-        all_studentrecords = self.session.scalars(select(StudentRecord)).all()
-        return all_studentrecords
-    

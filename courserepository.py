@@ -8,7 +8,8 @@ class CourseRepository:
         self.session = DataBase().get_session()
 
     def get_all_courses(self):
-        all_courses = self.session.scalars(select(Course)).all()
+        all_courses_data = select(Course).join(Course.professor).join(Course.subject)
+        all_courses = self.session.scalars(all_courses_data).all()
         return all_courses
 
     def add_course(self, professor_id, subject_id):
